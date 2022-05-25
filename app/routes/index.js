@@ -237,7 +237,7 @@ router.post(
   adupi.mitra.registerMitra
 );
 
-router.get("/api/v1/test", verifyToken(["TEST"]), () => {
+router.get("/", () => {
   console.log("test");
 });
 
