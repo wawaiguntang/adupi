@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2022 at 09:25 AM
+-- Generation Time: May 25, 2022 at 07:32 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -254,7 +254,16 @@ INSERT INTO `permission` (`permissionCode`, `permission`, `description`, `module
 (14, 'RUSER', 'Read all user', 1, '2022-05-22 02:52:14', NULL, NULL),
 (15, 'CUSER', 'Create new user', 1, '2022-05-22 02:52:14', NULL, NULL),
 (16, 'UUSER', 'Update user', 1, '2022-05-22 02:52:14', NULL, NULL),
-(17, 'DUSER', 'Delete user', 1, '2022-05-22 02:52:14', NULL, NULL);
+(17, 'DUSER', 'Delete user', 1, '2022-05-22 02:52:14', NULL, NULL),
+(18, 'RROLEUSER', 'Read list role from user', 1, '2022-05-25 00:36:20', NULL, NULL),
+(19, 'CROLEUSER', 'Add role to user', 1, '2022-05-25 00:36:20', NULL, NULL),
+(20, 'DROLEUSER', 'Delete role from user', 1, '2022-05-25 00:36:20', NULL, NULL),
+(21, 'RUSERPERMISSION', 'Read list special permission from user', 1, '2022-05-25 00:36:20', NULL, NULL),
+(22, 'CUSERPERMISSION', 'Add special permission to user', 1, '2022-05-25 00:36:20', NULL, NULL),
+(23, 'DUSERPERMISSION', 'Delete special permission from user', 1, '2022-05-25 00:36:20', NULL, NULL),
+(24, 'RPERMISSION', 'Read list permission', 1, '2022-05-25 00:50:53', NULL, NULL),
+(25, 'RPERMISSIONWITHMODULE', 'Read list permission with module', 1, '2022-05-25 00:50:53', NULL, NULL),
+(26, 'RPERMISSIONBYMODULE', 'Read list permission by module', 1, '2022-05-25 00:50:53', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -314,7 +323,16 @@ INSERT INTO `role_permission` (`rpCode`, `permissionCode`, `roleCode`, `createAt
 (15, 14, 1, '2022-05-22 02:52:14', NULL, NULL),
 (16, 15, 1, '2022-05-22 02:52:14', NULL, NULL),
 (17, 16, 1, '2022-05-22 02:52:14', NULL, NULL),
-(18, 17, 1, '2022-05-22 02:52:14', NULL, NULL);
+(18, 17, 1, '2022-05-22 02:52:14', NULL, NULL),
+(19, 18, 1, '2022-05-25 00:36:20', NULL, NULL),
+(20, 19, 1, '2022-05-25 00:36:20', NULL, NULL),
+(21, 20, 1, '2022-05-25 00:36:20', NULL, NULL),
+(22, 21, 1, '2022-05-25 00:36:20', NULL, NULL),
+(23, 22, 1, '2022-05-25 00:36:20', NULL, NULL),
+(24, 23, 1, '2022-05-25 00:36:20', NULL, NULL),
+(25, 24, 1, '2022-05-25 00:50:53', NULL, NULL),
+(26, 25, 1, '2022-05-25 00:50:53', NULL, NULL),
+(27, 26, 1, '2022-05-25 00:50:53', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -91953,7 +91971,7 @@ ALTER TABLE `module`
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `permissionCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `permissionCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -91965,7 +91983,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `role_permission`
 --
 ALTER TABLE `role_permission`
-  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `role_user`

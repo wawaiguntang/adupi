@@ -10,8 +10,4 @@
 
 
 
-on progress : management user : - get permission with module
-                                - get permission from role with module
-                                - get special permission from user with module
-
 
