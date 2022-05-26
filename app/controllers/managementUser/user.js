@@ -6,7 +6,7 @@ export const getAllUser = async (req, res, next) => {
     const user = await model.managementUser.user.findAll({
       where: {
         deleteAt: null,
-        status: "Public"
+        status: "Public",
       },
     });
     return res.status(200).json({
@@ -44,14 +44,13 @@ export const getOneUser = async (req, res, next) => {
   }
 };
 
-
 export const addUser = async (req, res, next) => {
   await model.managementUser.user
     .create({
       email: req.body.email,
       password: await bcrypt.hash(req.body.password, 10),
       isActive: req.body.isActive,
-      status: "Public"
+      status: "Public",
     })
     .then(function (user) {
       if (user) {
@@ -85,8 +84,8 @@ export const editUser = async (req, res, next) => {
             req.body.password != null && req.body.password != "undifined"
               ? await bcrypt.hash(req.body.password, 10)
               : user.password,
-              isActive: req.body.isActive,
-      status: "Public",
+          isActive: req.body.isActive,
+          status: "Public",
           updateAt: new Date(),
         },
         {
@@ -390,4 +389,3 @@ export const listPermission = async (req, res, next) => {
     });
   }
 };
-
