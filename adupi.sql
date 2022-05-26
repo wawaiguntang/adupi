@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2022 at 07:32 AM
+-- Generation Time: May 26, 2022 at 04:39 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -70,12 +70,19 @@ CREATE TABLE `fasilitator` (
   `fasilitatorCode` int(11) NOT NULL,
   `userCode` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `wilayahCode` int(11) NOT NULL,
+  `wilayahCode` varchar(20) NOT NULL,
   `alamat` longtext NOT NULL,
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `fasilitator`
+--
+
+INSERT INTO `fasilitator` (`fasilitatorCode`, `userCode`, `nama`, `wilayahCode`, `alamat`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(2, 27, 'Diki Rahmad Sandi', '11.05.07.2002', 'Jl.Cempaka Raya, Gg.Cempaka 6, No 07', '2022-05-26 14:06:53', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -181,20 +188,12 @@ CREATE TABLE `mitra` (
   `tempatLahir` date DEFAULT NULL,
   `tanggalLahir` date DEFAULT NULL,
   `alamat` longtext NOT NULL,
-  `aktif` varchar(1) NOT NULL,
   `fasilitatorCode` int(11) DEFAULT NULL,
   `userCode` int(11) NOT NULL,
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `mitra`
---
-
-INSERT INTO `mitra` (`mitraCode`, `nama`, `nik`, `ktp`, `noHp`, `jenisKelamin`, `wilayahCode`, `jenisMitra`, `tempatLahir`, `tanggalLahir`, `alamat`, `aktif`, `fasilitatorCode`, `userCode`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(17, 'Diki Rahmad Sandi', '1807122006990005', 'image base 64', '0895606226096', 'L', '11.05.07.2002', 'PT', '0000-00-00', '1999-06-20', 'Jl.Cempaka Raya, Gg Cempaka 6, No.07', '1', NULL, 25, '2022-05-21 19:18:55', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -216,7 +215,8 @@ CREATE TABLE `module` (
 
 INSERT INTO `module` (`moduleCode`, `module`, `createAt`, `updateAt`, `deleteAt`) VALUES
 (1, 'Management User', '2022-05-08 17:02:07', NULL, NULL),
-(2, 'Master', '2022-05-10 00:39:46', NULL, NULL);
+(2, 'Master', '2022-05-10 00:39:46', NULL, NULL),
+(3, 'Fasilitator', '2022-05-25 23:41:30', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -263,7 +263,11 @@ INSERT INTO `permission` (`permissionCode`, `permission`, `description`, `module
 (23, 'DUSERPERMISSION', 'Delete special permission from user', 1, '2022-05-25 00:36:20', NULL, NULL),
 (24, 'RPERMISSION', 'Read list permission', 1, '2022-05-25 00:50:53', NULL, NULL),
 (25, 'RPERMISSIONWITHMODULE', 'Read list permission with module', 1, '2022-05-25 00:50:53', NULL, NULL),
-(26, 'RPERMISSIONBYMODULE', 'Read list permission by module', 1, '2022-05-25 00:50:53', NULL, NULL);
+(26, 'RPERMISSIONBYMODULE', 'Read list permission by module', 1, '2022-05-25 00:50:53', NULL, NULL),
+(27, 'RFASILITATOR', 'Read fasilitator', 3, '2022-05-25 23:41:30', NULL, NULL),
+(28, 'CFASILITATOR', 'Create new fasilitator', 3, '2022-05-25 23:41:30', NULL, NULL),
+(29, 'UFASILITATOR', 'Update fasilitator', 3, '2022-05-25 23:41:30', NULL, NULL),
+(30, 'DFASILITATOR', 'Delete fasilitator', 3, '2022-05-25 23:41:30', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -332,7 +336,11 @@ INSERT INTO `role_permission` (`rpCode`, `permissionCode`, `roleCode`, `createAt
 (24, 23, 1, '2022-05-25 00:36:20', NULL, NULL),
 (25, 24, 1, '2022-05-25 00:50:53', NULL, NULL),
 (26, 25, 1, '2022-05-25 00:50:53', NULL, NULL),
-(27, 26, 1, '2022-05-25 00:50:53', NULL, NULL);
+(27, 26, 1, '2022-05-25 00:50:53', NULL, NULL),
+(28, 27, 1, '2022-05-25 23:41:30', NULL, NULL),
+(29, 28, 1, '2022-05-25 23:41:30', NULL, NULL),
+(30, 29, 1, '2022-05-25 23:41:30', NULL, NULL),
+(31, 30, 1, '2022-05-25 23:41:30', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -390,6 +398,8 @@ CREATE TABLE `user` (
   `userCode` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `isActive` int(1) NOT NULL DEFAULT 0,
+  `status` enum('Public','Private') NOT NULL DEFAULT 'Public',
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL
@@ -399,10 +409,10 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userCode`, `email`, `password`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(1, 'su@mail.com', '$2a$12$j.gGTsfI3auYwK.WhLiaTuj2LV..e2P0amAA2Pa2hjejBG8bF3ZFG', '2022-05-04 00:29:07', NULL, NULL),
-(25, 'wawaiguntang@gmail.com', '$2b$10$Lar/QAIw3koC5VOCxl3KUu6wREgd1wXQBQYBgCIhIVFArdj6IQ63K', '2022-05-21 19:18:55', NULL, NULL),
-(27, 'test1@gmail.com', '$2b$10$4Dtl9kehB7KxERzp617M5.KFfEaY0ZLEXZzPCcMd7T.FQdXbbqKyq', '2022-05-21 20:02:12', NULL, NULL);
+INSERT INTO `user` (`userCode`, `email`, `password`, `isActive`, `status`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(1, 'su@mail.com', '$2a$12$j.gGTsfI3auYwK.WhLiaTuj2LV..e2P0amAA2Pa2hjejBG8bF3ZFG', 1, 'Private', '2022-05-04 00:29:07', NULL, NULL),
+(27, 'test1@gmail.com', '$2b$10$4Dtl9kehB7KxERzp617M5.KFfEaY0ZLEXZzPCcMd7T.FQdXbbqKyq', 0, 'Public', '2022-05-21 20:02:12', NULL, NULL),
+(28, 'test@mail.com', '$2b$10$O5ApPWT20xJ6HMCEMskQbuBiHhlhqOmk/rzmiZ5e1gDpK5E/R7ZpG', 0, 'Public', '2022-05-26 14:30:42', '2022-05-26 14:33:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -91923,7 +91933,7 @@ ALTER TABLE `beli_sampah`
 -- AUTO_INCREMENT for table `fasilitator`
 --
 ALTER TABLE `fasilitator`
-  MODIFY `fasilitatorCode` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `fasilitatorCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jenis_sampah`
@@ -91965,13 +91975,13 @@ ALTER TABLE `mitra`
 -- AUTO_INCREMENT for table `module`
 --
 ALTER TABLE `module`
-  MODIFY `moduleCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `moduleCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `permissionCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `permissionCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -91983,7 +91993,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `role_permission`
 --
 ALTER TABLE `role_permission`
-  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `role_user`
@@ -92001,7 +92011,7 @@ ALTER TABLE `usaha`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `userCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `user_permission`
