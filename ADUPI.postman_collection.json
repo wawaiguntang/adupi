@@ -464,7 +464,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMTYzMDQ0LCJleHAiOjE2NTMyNDk0NDR9.vCHIrDVhXOq0lYGLunsdaxdNN-cLiwqz45OBC5zuciA",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
 											"type": "string"
 										}
 									]
@@ -479,7 +479,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\":\"test1@gmail.com\",\r\n    \"password\":\"123\"\r\n}"
+									"raw": "{\r\n    \"email\":\"test2@gmail.com\",\r\n    \"password\":\"123\",\r\n    \"isActive\": 0\r\n}"
 								},
 								"url": {
 									"raw": "http://localhost:5000/api/v1/user/add",
@@ -548,7 +548,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzMjkyNTY4LCJleHAiOjE2NTMzNzg5Njh9.aRTg5vFm0INBFaddS_R3sVMfB1gdCK5xE9pMsAvnGzU",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
 											"type": "string"
 										}
 									]
@@ -563,7 +563,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userCode\": 27,\r\n    \"email\":\"test@mail.com\",\r\n    \"password\":\"123\"\r\n}"
+									"raw": "{\r\n    \"userCode\": 28,\r\n    \"email\":\"test@mail.com\",\r\n    \"password\":\"123\",\r\n    \"isActive\": 0\r\n}"
 								},
 								"url": {
 									"raw": "http://localhost:5000/api/v1/user/edit",
@@ -1433,6 +1433,265 @@
 								"v1",
 								"registrasi",
 								"mitra"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fasilitator",
+			"item": [
+				{
+					"name": "lihat semua data fasilitator (super admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDk3NTI0LCJleHAiOjE2NTM1ODM5MjR9.ldaE4k7olW1wlnY0Qkz3k0GYkba5WJYtU2Jy3sYBt8c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jenis\":\"Bodong Mix\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/fasilitator/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lihat semua user untuk tambah data fasilitator (super admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/api/v1/fasilitator/getUserForAdd",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"getUserForAdd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tambah data fasilitator (super admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama\":\"Diki Rahmad Sandi\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg.Cempaka 6, No 07\",\r\n    \"userCode\":27,\r\n    \"wilayahCode\":\"11.05.07.2002\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/fasilitator/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lihat semua user untuk ubah data fasilitator (super admin)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNTcyNzM5LCJleHAiOjE2NTM2NTkxMzl9._8UsbKOqgvX0CB_WCL6tGpeRZuwYK4QtOP88Zo-_jxs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fasilitatorCode\": 2\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/fasilitator/getUserForEdit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"getUserForEdit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ubah data fasilitator (super admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDk3NTI0LCJleHAiOjE2NTM1ODM5MjR9.ldaE4k7olW1wlnY0Qkz3k0GYkba5WJYtU2Jy3sYBt8c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fasilitatorCode\": 1,\r\n    \"nama\":\"Diki Rahmad Sandi\",\r\n    \"alamat\": \"Jl.Cempaka Raya, Gg.Cempaka 6, No 07\",\r\n    \"userCode\":27,\r\n    \"wilayahCode\":\"11.05.07.2002\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/fasilitator/edit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hapus data fasilitator (super admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyQ29kZSI6MSwiaWF0IjoxNjUzNDk3NTI0LCJleHAiOjE2NTM1ODM5MjR9.ldaE4k7olW1wlnY0Qkz3k0GYkba5WJYtU2Jy3sYBt8c",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fasilitatorCode\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/v1/fasilitator/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"fasilitator",
+								"delete"
 							]
 						}
 					},
