@@ -4,13 +4,15 @@ import bcrypt from "bcrypt";
 
 export const registerMitra = async (req, res, next) => {
   let transaction;
-  try {
+  // try {
     transaction = await db.transaction();
     const passwordHash = await bcrypt.hash(req.body.password, 10);
     const user = await model.managementUser.user.create(
       {
         email: req.body.email,
         password: passwordHash,
+        isActive: 0,
+        status: "Public",
       },
       { transaction }
     );
@@ -28,46 +30,27 @@ export const registerMitra = async (req, res, next) => {
         tanggalLahir: req.body.tanggalLahir,
         alamat: req.body.alamat,
         userCode: user.userCode,
-        aktif: "1",
       },
       { transaction }
     );
-
-    // validation wilayah masih error
-    // const desa = await db.query(
-    //   "SELECT * FROM wilayah WHERE LEFT(wilayahCode,8)=? AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah",
-    //   {
-    //     replacements: [req.body.wilayahCode],
-    //     type: QueryTypes.SELECT,
-    //     transaction,
-    //     raw: true
-    //   }
-    // );
-    // if (desa == null || desa == 'undifined') {
-    //   await transaction.rollback();
-    //   return res.status(400).json({
-    //     status: 400,
-    //     message: "Gagal melakukan registrasi",
-    //   });
-    // }
 
     await transaction.commit();
     return res.status(200).json({
       status: 200,
       message: "Berhasil melakukan registrasi",
     });
-  } catch (err) {
-    if (transaction) {
-      await transaction.rollback();
-      return res.status(400).json({
-        status: 400,
-        message: "Gagal melakukan registrasi",
-      });
-    } else {
-      return res.status(400).json({
-        status: 400,
-        message: "Gagal melakukan registrasi",
-      });
-    }
-  }
+  // } catch (err) {
+  //   if (transaction) {
+  //     await transaction.rollback();
+  //     return res.status(400).json({
+  //       status: 400,
+  //       message: "Gagal melakukan registrasi",
+  //     });
+  //   } else {
+  //     return res.status(400).json({
+  //       status: 400,
+  //       message: "Gagal melakukan registrasi",
+  //     });
+  //   }
+  // }
 };

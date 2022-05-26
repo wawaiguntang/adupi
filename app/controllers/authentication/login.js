@@ -7,8 +7,15 @@ export const login = async (req, res, next) => {
     const user = await model.managementUser.user.findOne({
       where: {
         email: req.body.email,
+        deleteAt: null,
       },
     });
+    if (user.isActive == '0') {
+      return res.status(400).json({
+        status: 400,
+        message: "Account not active",
+      });
+    }
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match)
       return res.status(400).json({

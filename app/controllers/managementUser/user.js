@@ -6,6 +6,7 @@ export const getAllUser = async (req, res, next) => {
     const user = await model.managementUser.user.findAll({
       where: {
         deleteAt: null,
+        status: "Public"
       },
     });
     return res.status(200).json({
@@ -26,6 +27,7 @@ export const getOneUser = async (req, res, next) => {
     const user = await model.managementUser.user.findOne({
       where: {
         userCode: req.body.userCode,
+        status: "Public",
         deleteAt: null,
       },
     });
@@ -48,6 +50,8 @@ export const addUser = async (req, res, next) => {
     .create({
       email: req.body.email,
       password: await bcrypt.hash(req.body.password, 10),
+      isActive: req.body.isActive,
+      status: "Public"
     })
     .then(function (user) {
       if (user) {
@@ -69,6 +73,7 @@ export const editUser = async (req, res, next) => {
     const user = await model.managementUser.user.findOne({
       where: {
         userCode: req.body.userCode,
+        status: "Public",
         deleteAt: null,
       },
     });
@@ -80,6 +85,8 @@ export const editUser = async (req, res, next) => {
             req.body.password != null && req.body.password != "undifined"
               ? await bcrypt.hash(req.body.password, 10)
               : user.password,
+              isActive: req.body.isActive,
+      status: "Public",
           updateAt: new Date(),
         },
         {
@@ -115,6 +122,7 @@ export const deleteUser = async (req, res, next) => {
     const user = await model.managementUser.user.findOne({
       where: {
         userCode: req.body.userCode,
+        status: "Public",
         deleteAt: null,
       },
     });
@@ -156,6 +164,7 @@ export const addRoleUser = async (req, res, next) => {
     const user = await model.managementUser.user.findOne({
       where: {
         userCode: req.body.userCode,
+        status: "Public",
         deleteAt: null,
       },
     });
@@ -271,6 +280,7 @@ export const addPermission = async (req, res, next) => {
     const user = await model.managementUser.user.findOne({
       where: {
         userCode: req.body.userCode,
+        status: "Public",
         deleteAt: null,
       },
     });

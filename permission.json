@@ -2,14 +2,14 @@
   {
     "module": "Management User",
     "permission": [
-      { "permission": "RROLE", "description": "Read all role" },
+      { "permission": "RROLE", "description": "Read role" },
       { "permission": "CROLE", "description": "Create new role"},
       { "permission": "UROLE", "description": "Update role"},
       { "permission": "DROLE", "description": "Delete role"},
       { "permission": "RROLEPERMISSION", "description": "Read list permission from role"},
       { "permission": "CROLEPERMISSION", "description": "Add permission to role"},
       { "permission": "DROLEPERMISSION", "description": "Delete permission from role"},
-      { "permission": "RUSER", "description": "Read all user" },
+      { "permission": "RUSER", "description": "Read user" },
       { "permission": "CUSER", "description": "Create new user"},
       { "permission": "UUSER", "description": "Update user"},
       { "permission": "DUSER", "description": "Delete user"},
@@ -32,6 +32,15 @@
       { "permission": "CJENISSAMPAH", "description": "Membuat jenis sampah"},
       { "permission": "UJENISSAMPAH", "description": "Mengubah jenis sampah"},
       { "permission": "DJENISSAMPAH", "description": "Menghapus jenis sampah"}
+    ]
+  },
+  {
+    "module":"Fasilitator",
+    "permission": [
+      { "permission": "RFASILITATOR", "description": "Read fasilitator" },
+      { "permission": "CFASILITATOR", "description": "Create new fasilitator"},
+      { "permission": "UFASILITATOR", "description": "Update fasilitator"},
+      { "permission": "DFASILITATOR", "description": "Delete fasilitator"}
     ]
   }
 ]

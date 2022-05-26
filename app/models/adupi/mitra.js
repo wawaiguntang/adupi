@@ -50,10 +50,6 @@ export const mitra = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    aktif: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     fasilitatorCode: {
       type: DataTypes.INTEGER,
       allowNull: true,

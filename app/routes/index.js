@@ -237,6 +237,56 @@ router.post(
   adupi.mitra.registerMitra
 );
 
+// fasilitator
+router.get(
+  "/api/v1/fasilitator/all",
+  verifyToken(["RFASILITATOR"]),
+  adupi.fasilitator.getAllFasilitator
+);
+
+router.get(
+  "/api/v1/fasilitator/one",
+  verifyToken(["RFASILITATOR"]),
+  adupi.validation.fasilitator.oneFasilitatorValidation,
+  validate,
+  adupi.fasilitator.getOneFasilitator
+);
+
+router.get(
+  "/api/v1/fasilitator/getUserForAdd",
+  verifyToken(["CFASILITATOR"]),
+  adupi.fasilitator.getUserForAddFasilitator
+);
+router.post(
+  "/api/v1/fasilitator/add",
+  verifyToken(["CFASILITATOR"]),
+  adupi.validation.fasilitator.addFasilitatorValidation,
+  validate,
+  adupi.fasilitator.addFasilitator
+);
+
+router.get(
+  "/api/v1/fasilitator/getUserForEdit",
+  verifyToken(["CFASILITATOR"]),
+  adupi.validation.fasilitator.oneFasilitatorValidation,
+  validate,
+  adupi.fasilitator.getUserForEditFasilitator
+);
+router.put(
+  "/api/v1/fasilitator/edit",
+  verifyToken(["UFASILITATOR"]),
+  adupi.validation.fasilitator.editFasilitatorValidation,
+  validate,
+  adupi.fasilitator.editFasilitator
+);
+router.delete(
+  "/api/v1/fasilitator/delete",
+  verifyToken(["DFASILITATOR"]),
+  adupi.validation.fasilitator.oneFasilitatorValidation,
+  validate,
+  adupi.fasilitator.deleteFasilitator
+);
+
 router.get("/", () => {
   console.log("test");
 });

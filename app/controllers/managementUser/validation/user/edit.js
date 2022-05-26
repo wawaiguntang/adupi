@@ -5,6 +5,7 @@ import { Sequelize } from "sequelize";
 const op = Sequelize.Op;
 export const editUserValidation = [
   check("userCode", "User code is required").notEmpty().trim().escape(),
+  check("isActive", "Status is required").notEmpty().trim().escape(),
   check("email", "Email is required").notEmpty().trim().escape(),
   check("email", "Email not valid").isEmail().trim().escape().normalizeEmail(),
   check("email").custom(async (value, { req }) => {
@@ -24,6 +25,7 @@ export const editUserValidation = [
                 [op.ne]: user.email,
               },
             },
+            { deleteAt: null },
           ],
         },
       })

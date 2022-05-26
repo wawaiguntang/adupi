@@ -9,7 +9,7 @@ import expressValidator from 'express-validator';
 dotenv.config();
 const app = express();
 
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "http://localhost:5000" }));
 app.use(cookieParser());
 app.use(
   bodyParser.urlencoded({

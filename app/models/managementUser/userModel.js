@@ -19,6 +19,14 @@ export const user = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    isActive: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     createAt: {
       type: "DATETIME",
     },
