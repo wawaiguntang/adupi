@@ -10,76 +10,83 @@ export const verifyToken = (permission = []) => {
         status: 401,
         message: "You are not authorization",
       });
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, decoded) => {
-      if (err)
-        return res.status(403).json({
-          status: 403,
-          message: "Token is invalid",
-        });
-      const userCode = decoded.userCode;
-      const ru = await model.managementUser.roleUser.findAll({
-        where: {
-          userCode: userCode,
-          deleteAt: null,
-        },
-        include: [
-          {
-            model: model.managementUser.role,
-            where: {
-              deleteAt: null,
-            },
-          },
-        ],
-      });
-      const tempRoleCode = [];
-      await ru.forEach((item, index, arr) => {
-        tempRoleCode.push(item.role.roleCode);
-      });
-
-      const { count, rows } = await model.managementUser.rolePermission.findAndCountAll({
-        attributes: ["rpCode"],
-        where: {
-          roleCode: tempRoleCode,
-          deleteAt: null,
-        },
-        include: [
-          {
-            model: model.managementUser.permission,
-            where: {
-              permission: permission,
-              deleteAt: null,
-            },
-          },
-        ],
-      });
-
-      if (count > 0) {
-        next();
-      } else {
-        const { count, rows } = await model.managementUser.userPermission.findAndCountAll({
-          attributes: ["upCode"],
+    jwt.verify(
+      token,
+      "KALO DI UBUNTU .ENV NYA GAK KEBACA",
+      // process.env.ACCESS_TOKEN_SECRET,
+      async (err, decoded) => {
+        if (err)
+          return res.status(403).json({
+            status: 403,
+            message: "Token is invalid",
+          });
+        const userCode = decoded.userCode;
+        const ru = await model.managementUser.roleUser.findAll({
           where: {
             userCode: userCode,
             deleteAt: null,
           },
           include: [
             {
-              model: model.managementUser.permission,
+              model: model.managementUser.role,
               where: {
-                permission: permission,
                 deleteAt: null,
               },
             },
           ],
         });
-        if (count <= 0) {
-          return res.status(400).json({
-            status: 400,
-            message: "You don't have a access",
+        const tempRoleCode = [];
+        await ru.forEach((item, index, arr) => {
+          tempRoleCode.push(item.role.roleCode);
+        });
+
+        const { count, rows } =
+          await model.managementUser.rolePermission.findAndCountAll({
+            attributes: ["rpCode"],
+            where: {
+              roleCode: tempRoleCode,
+              deleteAt: null,
+            },
+            include: [
+              {
+                model: model.managementUser.permission,
+                where: {
+                  permission: permission,
+                  deleteAt: null,
+                },
+              },
+            ],
           });
+
+        if (count > 0) {
+          next();
+        } else {
+          const { count, rows } =
+            await model.managementUser.userPermission.findAndCountAll({
+              attributes: ["upCode"],
+              where: {
+                userCode: userCode,
+                deleteAt: null,
+              },
+              include: [
+                {
+                  model: model.managementUser.permission,
+                  where: {
+                    permission: permission,
+                    deleteAt: null,
+                  },
+                },
+              ],
+            });
+          if (count <= 0) {
+            return res.status(400).json({
+              status: 400,
+              message: "You don't have a access",
+            });
+          }
+          next();
         }
-        next();
       }
-    });
+    );
   };
 };

@@ -1,12 +1,12 @@
 import express from "express";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import cors from "cors";
 import router from "./app/routes/index.js";
 import expressValidator from 'express-validator';
 
-dotenv.config();
+// dotenv.config();
 const app = express();
 
 app.use(cors({ credentials: true, origin: "http://localhost:5000" }));

@@ -26,7 +26,8 @@ export const login = async (req, res, next) => {
     const userCode = user.userCode;
     const accessToken = jwt.sign(
       { userCode: userCode },
-      process.env.ACCESS_TOKEN_SECRET,
+      "KALO DI UBUNTU .ENV NYA GAK KEBACA",
+      // process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: "1d",
       }
@@ -34,7 +35,8 @@ export const login = async (req, res, next) => {
 
     const refreshToken = jwt.sign(
       { userCode: userCode },
-      process.env.REFRESH_TOKEN_SECRET,
+      "KALO DI UBUNTU .ENV NYA GAK KEBACA",
+      // process.env.REFRESH_TOKEN_SECRET,
       {
         expiresIn: "7d",
       }
