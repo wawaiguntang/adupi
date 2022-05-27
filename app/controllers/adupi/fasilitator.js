@@ -26,10 +26,16 @@ export const getOneFasilitator = async (req, res, next) => {
   try {
     const fasilitator = await model.adupi.fasilitator.findOne({
       where: {
-        fasilitatorCode: req.body.fasilitatorCode,
+        fasilitatorCode: req.params.fasilitatorCode,
         deleteAt: null,
       },
     });
+    if(!fasilitator){
+      return res.status(404).json({
+        status: 404,
+        message: "Fasilitator tidak ditemukan",
+      });
+    }
     return res.status(200).json({
       status: 200,
       message: "Fasilitator ditemukan",
@@ -70,10 +76,16 @@ export const editFasilitator = async (req, res, next) => {
   try {
     const fasilitator = await model.adupi.fasilitator.findOne({
       where: {
-        fasilitatorCode: req.body.fasilitatorCode,
+        fasilitatorCode: req.params.fasilitatorCode,
         deleteAt: null,
       },
     });
+    if(!fasilitator){
+      return res.status(404).json({
+        status: 404,
+        message: "Fasilitator tidak ditemukan",
+      });
+    }
     await model.adupi.fasilitator
       .update(
         {
@@ -85,7 +97,7 @@ export const editFasilitator = async (req, res, next) => {
         },
         {
           where: {
-            fasilitatorCode: req.body.fasilitatorCode,
+            fasilitatorCode: req.params.fasilitatorCode,
             deleteAt: null,
           },
         }
@@ -115,7 +127,7 @@ export const deleteFasilitator = async (req, res, next) => {
   try {
     const fasilitator = await model.adupi.fasilitator.findOne({
       where: {
-        fasilitatorCode: req.body.fasilitatorCode,
+        fasilitatorCode: req.params.fasilitatorCode,
         deleteAt: null,
       },
     });
@@ -126,7 +138,7 @@ export const deleteFasilitator = async (req, res, next) => {
         },
         {
           where: {
-            fasilitatorCode: req.body.fasilitatorCode,
+            fasilitatorCode: req.params.fasilitatorCode,
             deleteAt: null,
           },
         }
@@ -193,7 +205,7 @@ export const getUserForAddFasilitator = async (req, res, next) => {
 export const getUserForEditFasilitator = async (req, res, next) => {
   const re = await model.adupi.fasilitator.findOne({
     where: {
-      fasilitatorCode: req.body.fasilitatorCode,
+      fasilitatorCode: req.params.fasilitatorCode,
       deleteAt: null,
     },
   });

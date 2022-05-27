@@ -24,10 +24,16 @@ export const getOnePermission = async (req, res, next) => {
   try {
     const permission = await model.managementUser.permission.findOne({
       where: {
-        permissionCode: req.body.permissionCode,
+        permissionCode: req.params.permissionCode,
         deleteAt: null,
       },
     });
+    if (!permission) {
+      return res.status(404).json({
+        status: 404,
+        message: "Permission not found",
+      });
+    }
     return res.status(200).json({
       status: 200,
       message: "Permission found",
@@ -45,10 +51,16 @@ export const getAllPermissionByModule = async (req, res, next) => {
   try {
     const permission = await model.managementUser.permission.findAll({
       where: {
-        moduleCode: req.body.moduleCode,
+        moduleCode: req.params.moduleCode,
         deleteAt: null,
       },
     });
+    if (!permission) {
+      return res.status(404).json({
+        status: 404,
+        message: "Permission not found",
+      });
+    }
     return res.status(200).json({
       status: 200,
       message: "Permission found",

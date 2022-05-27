@@ -6,7 +6,7 @@ export const getAllDesa = async (req, res, next) => {
     const desa = await db.query(
       "SELECT * FROM wilayah WHERE LEFT(wilayahCode,8)=? AND CHAR_LENGTH(wilayahCode)=13 ORDER BY wilayah",
       {
-        replacements: [req.body.wilayahCode],
+        replacements: [req.params.wilayahCode],
         type: QueryTypes.SELECT,
       }
     );

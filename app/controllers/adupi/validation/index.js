@@ -1,7 +1,6 @@
 import { registrasiMitraValidation } from "./mitra/registrasiMitra.js";
 import { addFasilitatorValidation } from "./fasilitator/add.js";
 import { editFasilitatorValidation } from "./fasilitator/edit.js";
-import { oneFasilitatorValidation } from "./fasilitator/one.js";
 
 export const validation = {
     mitra: {
@@ -10,6 +9,5 @@ export const validation = {
     fasilitator:{
         addFasilitatorValidation,
         editFasilitatorValidation,
-        oneFasilitatorValidation,
     }
 };

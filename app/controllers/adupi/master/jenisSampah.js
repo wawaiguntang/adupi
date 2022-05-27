@@ -20,6 +20,33 @@ export const getAllJenisSampah = async (req, res, next) => {
   }
 };
 
+export const getOneJenisSampah = async (req, res, next) => {
+  try {
+    const jenis = await model.adupi.master.jenisSampah.findAll({
+      where: {
+        jsCode: req.params.jsCode,
+        deleteAt: null,
+      },
+    });
+    if(!jenis){
+      return res.status(404).json({
+        status: 404,
+        message: "Jenis sampah tidak ditemukan",
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      message: "Jenis sampah ditemukan",
+      data: jenis,
+    });
+  } catch (error) {
+    return res.status(404).json({
+      status: 404,
+      message: "Jenis sampah tidak ditemukan",
+    });
+  }
+};
+
 export const addJenisSampah = async (req, res, next) => {
   await model.adupi.master.jenisSampah
     .create({
@@ -44,10 +71,16 @@ export const editJenisSampah = async (req, res, next) => {
   try {
     const jenis = await model.adupi.master.jenisSampah.findOne({
       where: {
-        jsCode: req.body.jsCode,
+        jsCode: req.params.jsCode,
         deleteAt: null,
       },
     });
+    if(!jenis){
+      return res.status(404).json({
+        status: 404,
+        message: "Jenis sampah tidak ditemukan",
+      });
+    }
     await model.adupi.master.jenisSampah
       .update(
         {
@@ -56,7 +89,7 @@ export const editJenisSampah = async (req, res, next) => {
         },
         {
           where: {
-            jsCode: req.body.jsCode,
+            jsCode: req.params.jsCode,
             deleteAt: null,
           },
         }
@@ -86,10 +119,16 @@ export const deleteJenisSampah = async (req, res, next) => {
   try {
     const jenis = await model.adupi.master.jenisSampah.findOne({
       where: {
-        jsCode: req.body.jsCode,
+        jsCode: req.params.jsCode,
         deleteAt: null,
       },
     });
+    if(!jenis){
+      return res.status(404).json({
+        status: 404,
+        message: "Jenis sampah tidak ditemukan",
+      });
+    }
     await model.adupi.master.jenisSampah
       .update(
         {
@@ -97,7 +136,7 @@ export const deleteJenisSampah = async (req, res, next) => {
         },
         {
           where: {
-            jsCode: req.body.jsCode,
+            jsCode: req.params.jsCode,
             deleteAt: null,
           },
         }

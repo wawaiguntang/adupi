@@ -9,6 +9,7 @@ export const addRoleUserValidation = [
       where: {
         userCode: req.body.userCode,
         deleteAt: null,
+        status:"Public"
       },
     }).then((user) => {
       if (!user) {

@@ -26,11 +26,17 @@ export const getOneUser = async (req, res, next) => {
   try {
     const user = await model.managementUser.user.findOne({
       where: {
-        userCode: req.body.userCode,
+        userCode: req.params.userCode,
         status: "Public",
         deleteAt: null,
       },
     });
+    if(!user){
+      return res.status(404).json({
+        status: 404,
+        message: "User not found",
+      });
+    }
     return res.status(200).json({
       status: 200,
       message: "User found",
@@ -71,11 +77,17 @@ export const editUser = async (req, res, next) => {
   try {
     const user = await model.managementUser.user.findOne({
       where: {
-        userCode: req.body.userCode,
+        userCode: req.params.userCode,
         status: "Public",
         deleteAt: null,
       },
     });
+    if(!user){
+      return res.status(404).json({
+        status: 404,
+        message: "User not found",
+      });
+    }
     await model.managementUser.user
       .update(
         {
@@ -90,7 +102,7 @@ export const editUser = async (req, res, next) => {
         },
         {
           where: {
-            userCode: req.body.userCode,
+            userCode: req.params.userCode,
             deleteAt: null,
           },
         }
@@ -120,11 +132,17 @@ export const deleteUser = async (req, res, next) => {
   try {
     const user = await model.managementUser.user.findOne({
       where: {
-        userCode: req.body.userCode,
+        userCode: req.params.userCode,
         status: "Public",
         deleteAt: null,
       },
     });
+    if(!user){
+      return res.status(404).json({
+        status: 404,
+        message: "User not found",
+      });
+    }
     await model.managementUser.user
       .update(
         {
@@ -132,7 +150,7 @@ export const deleteUser = async (req, res, next) => {
         },
         {
           where: {
-            userCode: req.body.userCode,
+            userCode: req.params.userCode,
             deleteAt: null,
           },
         }
@@ -160,19 +178,6 @@ export const deleteUser = async (req, res, next) => {
 
 export const addRoleUser = async (req, res, next) => {
   try {
-    const user = await model.managementUser.user.findOne({
-      where: {
-        userCode: req.body.userCode,
-        status: "Public",
-        deleteAt: null,
-      },
-    });
-    const role = await model.managementUser.role.findOne({
-      where: {
-        roleCode: req.body.roleCode,
-        deleteAt: null,
-      },
-    });
     await model.managementUser.roleUser
       .create({
         roleCode: req.body.roleCode,
@@ -203,10 +208,16 @@ export const deleteRoleUser = async (req, res, next) => {
   try {
     const roleUser = await model.managementUser.roleUser.findOne({
       where: {
-        ruCode: req.body.ruCode,
+        ruCode: req.params.ruCode,
         deleteAt: null,
       },
     });
+    if(!roleUser){
+      return res.status(404).json({
+        status: 404,
+        message: "User role not found",
+      });
+    }
     await model.managementUser.roleUser
       .update(
         {
@@ -214,7 +225,7 @@ export const deleteRoleUser = async (req, res, next) => {
         },
         {
           where: {
-            ruCode: req.body.ruCode,
+            ruCode: req.params.ruCode,
             deleteAt: null,
           },
         }
@@ -244,7 +255,7 @@ export const listRole = async (req, res, next) => {
   try {
     const role = await model.managementUser.roleUser.findAll({
       where: {
-        userCode: req.body.userCode,
+        userCode: req.params.userCode,
         deleteAt: null,
       },
       include: [
@@ -276,19 +287,6 @@ export const listRole = async (req, res, next) => {
 
 export const addPermission = async (req, res, next) => {
   try {
-    const user = await model.managementUser.user.findOne({
-      where: {
-        userCode: req.body.userCode,
-        status: "Public",
-        deleteAt: null,
-      },
-    });
-    const permission = await model.managementUser.permission.findOne({
-      where: {
-        permissionCode: req.body.permissionCode,
-        deleteAt: null,
-      },
-    });
     await model.managementUser.userPermission
       .create({
         userCode: req.body.userCode,
@@ -319,10 +317,16 @@ export const deletePermission = async (req, res, next) => {
   try {
     const userPermission = await model.managementUser.userPermission.findOne({
       where: {
-        upCode: req.body.upCode,
+        upCode: req.params.upCode,
         deleteAt: null,
       },
     });
+    if(!userPermission){
+      return res.status(404).json({
+        status: 404,
+        message: "User permission not found",
+      });
+    }
     await model.managementUser.userPermission
       .update(
         {
@@ -330,7 +334,7 @@ export const deletePermission = async (req, res, next) => {
         },
         {
           where: {
-            upCode: req.body.upCode,
+            upCode: req.params.upCode,
             deleteAt: null,
           },
         }
@@ -361,7 +365,7 @@ export const listPermission = async (req, res, next) => {
     const permission = await model.managementUser.userPermission.findAll({
       attributes: ["upCode"],
       where: {
-        userCode: req.body.userCode,
+        userCode: req.params.userCode,
         deleteAt: null,
       },
       include: [

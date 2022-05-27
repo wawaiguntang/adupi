@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 26, 2022 at 04:39 PM
+-- Generation Time: May 27, 2022 at 08:41 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -82,7 +82,7 @@ CREATE TABLE `fasilitator` (
 --
 
 INSERT INTO `fasilitator` (`fasilitatorCode`, `userCode`, `nama`, `wilayahCode`, `alamat`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(2, 27, 'Diki Rahmad Sandi', '11.05.07.2002', 'Jl.Cempaka Raya, Gg.Cempaka 6, No 07', '2022-05-26 14:06:53', NULL, NULL);
+(2, 27, 'Diki Rahmad Sandi', '11.05.07.2002', 'Jl.Cempaka Raya, Gg.Cempaka 6, No 07', '2022-05-26 14:06:53', '2022-05-27 17:20:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -103,7 +103,8 @@ CREATE TABLE `jenis_sampah` (
 --
 
 INSERT INTO `jenis_sampah` (`jsCode`, `jenis`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(1, 'Bodong Mix', '2022-05-09 17:48:14', '2022-05-09 17:49:19', NULL);
+(1, 'Bodong Mix', '2022-05-09 17:48:14', '2022-05-27 17:36:15', NULL),
+(2, 'Bodong Mix', '2022-05-27 17:33:07', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -278,6 +279,7 @@ INSERT INTO `permission` (`permissionCode`, `permission`, `description`, `module
 CREATE TABLE `role` (
   `roleCode` int(11) NOT NULL,
   `role` varchar(100) NOT NULL,
+  `status` enum('Public','Private') NOT NULL DEFAULT 'Public',
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `updateAt` datetime DEFAULT NULL,
   `deleteAt` datetime DEFAULT NULL
@@ -287,10 +289,11 @@ CREATE TABLE `role` (
 -- Dumping data for table `role`
 --
 
-INSERT INTO `role` (`roleCode`, `role`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(1, 'Super Admin', '2022-05-08 12:00:23', NULL, NULL),
-(2, 'Fasilitator', '2022-05-08 16:33:15', NULL, NULL),
-(3, 'Mitra', '2022-05-08 15:58:16', '2022-05-08 16:25:41', NULL);
+INSERT INTO `role` (`roleCode`, `role`, `status`, `createAt`, `updateAt`, `deleteAt`) VALUES
+(1, 'Super Admin', 'Private', '2022-05-08 12:00:23', NULL, NULL),
+(2, 'Fasilitator', 'Public', '2022-05-08 16:33:15', NULL, NULL),
+(3, 'Mitra', 'Public', '2022-05-08 15:58:16', '2022-05-08 16:25:41', NULL),
+(4, 'Test', 'Public', '2022-05-27 16:14:00', '2022-05-27 16:15:11', '2022-05-27 16:15:54');
 
 -- --------------------------------------------------------
 
@@ -340,7 +343,8 @@ INSERT INTO `role_permission` (`rpCode`, `permissionCode`, `roleCode`, `createAt
 (28, 27, 1, '2022-05-25 23:41:30', NULL, NULL),
 (29, 28, 1, '2022-05-25 23:41:30', NULL, NULL),
 (30, 29, 1, '2022-05-25 23:41:30', NULL, NULL),
-(31, 30, 1, '2022-05-25 23:41:30', NULL, NULL);
+(31, 30, 1, '2022-05-25 23:41:30', NULL, NULL),
+(32, 5, 2, '2022-05-27 16:26:08', NULL, '2022-05-27 16:27:39');
 
 -- --------------------------------------------------------
 
@@ -363,7 +367,8 @@ CREATE TABLE `role_user` (
 
 INSERT INTO `role_user` (`ruCode`, `userCode`, `roleCode`, `createAt`, `updateAt`, `deleteAt`) VALUES
 (1, 1, 1, '2022-05-08 12:00:45', NULL, NULL),
-(2, 1, 2, '2022-05-08 16:33:30', NULL, NULL);
+(2, 1, 2, '2022-05-08 16:33:30', NULL, NULL),
+(3, 27, 2, '2022-05-27 16:46:55', NULL, '2022-05-27 16:47:48');
 
 -- --------------------------------------------------------
 
@@ -412,7 +417,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`userCode`, `email`, `password`, `isActive`, `status`, `createAt`, `updateAt`, `deleteAt`) VALUES
 (1, 'su@mail.com', '$2a$12$j.gGTsfI3auYwK.WhLiaTuj2LV..e2P0amAA2Pa2hjejBG8bF3ZFG', 1, 'Private', '2022-05-04 00:29:07', NULL, NULL),
 (27, 'test1@gmail.com', '$2b$10$4Dtl9kehB7KxERzp617M5.KFfEaY0ZLEXZzPCcMd7T.FQdXbbqKyq', 0, 'Public', '2022-05-21 20:02:12', NULL, NULL),
-(28, 'test@mail.com', '$2b$10$O5ApPWT20xJ6HMCEMskQbuBiHhlhqOmk/rzmiZ5e1gDpK5E/R7ZpG', 0, 'Public', '2022-05-26 14:30:42', '2022-05-26 14:33:08', NULL);
+(28, 'test@mail.com', '$2b$10$O5ApPWT20xJ6HMCEMskQbuBiHhlhqOmk/rzmiZ5e1gDpK5E/R7ZpG', 0, 'Public', '2022-05-26 14:30:42', '2022-05-26 14:33:08', NULL),
+(29, 'test3@mail.com', '$2b$10$m1NA6MVTWuW./h6VMAbESel6TKTLipEngfUuoOWHkI8r7.G7u4Nk.', 0, 'Public', '2022-05-27 16:42:01', '2022-05-27 16:43:32', '2022-05-27 16:44:04');
 
 -- --------------------------------------------------------
 
@@ -434,7 +440,8 @@ CREATE TABLE `user_permission` (
 --
 
 INSERT INTO `user_permission` (`upCode`, `userCode`, `permissionCode`, `createAt`, `updateAt`, `deleteAt`) VALUES
-(1, 1, 1, '2022-05-08 17:17:00', NULL, NULL);
+(1, 1, 1, '2022-05-08 17:17:00', NULL, NULL),
+(2, 27, 5, '2022-05-27 16:48:49', NULL, '2022-05-27 16:49:46');
 
 -- --------------------------------------------------------
 
@@ -91939,7 +91946,7 @@ ALTER TABLE `fasilitator`
 -- AUTO_INCREMENT for table `jenis_sampah`
 --
 ALTER TABLE `jenis_sampah`
-  MODIFY `jsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `jsCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jual_sampah`
@@ -91987,19 +91994,19 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `roleCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `roleCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `role_permission`
 --
 ALTER TABLE `role_permission`
-  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `rpCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `ruCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ruCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `usaha`
@@ -92011,13 +92018,13 @@ ALTER TABLE `usaha`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `userCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `user_permission`
 --
 ALTER TABLE `user_permission`
-  MODIFY `upCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `upCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

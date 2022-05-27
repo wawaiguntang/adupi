@@ -4,6 +4,7 @@ import { authentication } from "../controllers/authentication/index.js";
 import { managementUser } from "../controllers/managementUser/index.js";
 import { wilayah } from "../controllers/wilayah/index.js";
 import { adupi } from "../controllers/adupi/index.js";
+import { account } from "../controllers/account/index.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
@@ -25,10 +26,8 @@ router.get(
 );
 
 router.get(
-  "/api/v1/role/one",
+  "/api/v1/role/one/:roleCode",
   verifyToken(["RROLE"]),
-  managementUser.validation.role.oneRoleValidation,
-  validate,
   managementUser.role.getOneRole
 );
 
@@ -40,25 +39,21 @@ router.post(
   managementUser.role.addRole
 );
 router.put(
-  "/api/v1/role/edit",
+  "/api/v1/role/edit/:roleCode",
   verifyToken(["UROLE"]),
   managementUser.validation.role.editRoleValidation,
   validate,
   managementUser.role.editRole
 );
 router.delete(
-  "/api/v1/role/delete",
+  "/api/v1/role/delete/:roleCode",
   verifyToken(["DROLE"]),
-  managementUser.validation.role.deleteRoleValidation,
-  validate,
   managementUser.role.deleteRole
 );
 
 router.get(
-  "/api/v1/rolePermission/list",
+  "/api/v1/rolePermission/list/:roleCode",
   verifyToken(["RROLEPERMISSION"]),
-  managementUser.validation.role.listPermissionValidation,
-  validate,
   managementUser.role.listPermission
 );
 
@@ -71,10 +66,8 @@ router.post(
 );
 
 router.delete(
-  "/api/v1/rolePermission/delete",
+  "/api/v1/rolePermission/delete/:rpCode",
   verifyToken(["DROLEPERMISSION"]),
-  managementUser.validation.role.deleteRolePermissionValidation,
-  validate,
   managementUser.role.deletePermission
 );
 
@@ -86,10 +79,8 @@ router.get(
 );
 
 router.get(
-  "/api/v1/user/one",
+  "/api/v1/user/one/:userCode",
   verifyToken(["RUSER"]),
-  managementUser.validation.user.oneUserValidation,
-  validate,
   managementUser.user.getOneUser
 );
 
@@ -101,25 +92,21 @@ router.post(
   managementUser.user.addUser
 );
 router.put(
-  "/api/v1/user/edit",
+  "/api/v1/user/edit/:userCode",
   verifyToken(["UUSER"]),
   managementUser.validation.user.editUserValidation,
   validate,
   managementUser.user.editUser
 );
 router.delete(
-  "/api/v1/user/delete",
+  "/api/v1/user/delete/:userCode",
   verifyToken(["DUSER"]),
-  managementUser.validation.user.deleteUserValidation,
-  validate,
   managementUser.user.deleteUser
 );
 
 router.get(
-  "/api/v1/roleUser/list",
+  "/api/v1/roleUser/list/:userCode",
   verifyToken(["RROLEUSER"]),
-  managementUser.validation.user.listRoleValidation,
-  validate,
   managementUser.user.listRole
 );
 
@@ -132,18 +119,14 @@ router.post(
 );
 
 router.delete(
-  "/api/v1/roleUser/delete",
+  "/api/v1/roleUser/delete/:ruCode",
   verifyToken(["DROLEUSER"]),
-  managementUser.validation.user.deleteRoleUserValidation,
-  validate,
   managementUser.user.deleteRoleUser
 );
 
 router.get(
-  "/api/v1/userPermission/list",
+  "/api/v1/userPermission/list/:userCode",
   verifyToken(["RUSERPERMISSION"]),
-  managementUser.validation.user.listPermissionUserValidation,
-  validate,
   managementUser.user.listPermissionUser
 );
 
@@ -156,13 +139,12 @@ router.post(
 );
 
 router.delete(
-  "/api/v1/userPermission/delete",
+  "/api/v1/userPermission/delete/:upCode",
   verifyToken(["DUSERPERMISSION"]),
-  managementUser.validation.user.deleteUserPermissionValidation,
-  validate,
   managementUser.user.deletePermissionUser
 );
 
+//permission
 router.get(
   "/api/v1/permission/all",
   verifyToken(["RPERMISSION"]),
@@ -176,29 +158,31 @@ router.get(
 );
 
 router.get(
-  "/api/v1/permissionByModule/list",
+  "/api/v1/permissionByModule/list/:moduleCode",
   verifyToken(["RPERMISSIONBYMODULE"]),
-  managementUser.validation.permission.allPermissionByModuleValidation,
-  validate,
   managementUser.permission.getAllPermissionByModule
 );
 
 router.get(
-  "/api/v1/permission/one",
+  "/api/v1/permission/one/:permissionCode",
   verifyToken(["RPERMISSION"]),
-  managementUser.validation.permission.onePermissionValidation,
-  validate,
   managementUser.permission.getOnePermission
 );
 
+// account
+router.get(
+  "/api/v1/account/self",
+  account.self
+);
+
 // wilayah
-router.post("/api/v1/wilayah/provinsi/all", wilayah.provinsi.getAllProvinsi);
+router.get("/api/v1/wilayah/provinsi/all", wilayah.provinsi.getAllProvinsi);
 
-router.post("/api/v1/wilayah/kabupaten/all", wilayah.kabupaten.getAllKabupaten);
+router.get("/api/v1/wilayah/kabupaten/all/:wilayahCode", wilayah.kabupaten.getAllKabupaten);
 
-router.post("/api/v1/wilayah/kecamatan/all", wilayah.kecamatan.getAllKecamatan);
+router.get("/api/v1/wilayah/kecamatan/all/:wilayahCode", wilayah.kecamatan.getAllKecamatan);
 
-router.post("/api/v1/wilayah/desa/all", wilayah.desa.getAllDesa);
+router.get("/api/v1/wilayah/desa/all/:wilayahCode", wilayah.desa.getAllDesa);
 
 // adupi
 // master
@@ -206,6 +190,11 @@ router.get(
   "/api/v1/master/jenisSampah/all",
   verifyToken(["RJENISSAMPAH"]),
   adupi.master.jenisSampah.getAllJenisSampah
+);
+router.get(
+  "/api/v1/master/jenisSampah/one/:jsCode",
+  verifyToken(["RJENISSAMPAH"]),
+  adupi.master.jenisSampah.getOneJenisSampah
 );
 router.post(
   "/api/v1/master/jenisSampah/add",
@@ -215,17 +204,15 @@ router.post(
   adupi.master.jenisSampah.addJenisSampah
 );
 router.put(
-  "/api/v1/master/jenisSampah/edit",
+  "/api/v1/master/jenisSampah/edit/:jsCode",
   verifyToken(["UJENISSAMPAH"]),
   adupi.master.jenisSampah.validation.jenisSampah.editJenisSampahValidation,
   validate,
   adupi.master.jenisSampah.editJenisSampah
 );
 router.delete(
-  "/api/v1/master/jenisSampah/delete",
+  "/api/v1/master/jenisSampah/delete/:jsCode",
   verifyToken(["DJENISSAMPAH"]),
-  adupi.master.jenisSampah.validation.jenisSampah.deleteJenisSampahValidation,
-  validate,
   adupi.master.jenisSampah.deleteJenisSampah
 );
 
@@ -245,10 +232,8 @@ router.get(
 );
 
 router.get(
-  "/api/v1/fasilitator/one",
+  "/api/v1/fasilitator/one/:fasilitatorCode",
   verifyToken(["RFASILITATOR"]),
-  adupi.validation.fasilitator.oneFasilitatorValidation,
-  validate,
   adupi.fasilitator.getOneFasilitator
 );
 
@@ -266,24 +251,20 @@ router.post(
 );
 
 router.get(
-  "/api/v1/fasilitator/getUserForEdit",
+  "/api/v1/fasilitator/getUserForEdit/:fasilitatorCode",
   verifyToken(["CFASILITATOR"]),
-  adupi.validation.fasilitator.oneFasilitatorValidation,
-  validate,
   adupi.fasilitator.getUserForEditFasilitator
 );
 router.put(
-  "/api/v1/fasilitator/edit",
+  "/api/v1/fasilitator/edit/:fasilitatorCode",
   verifyToken(["UFASILITATOR"]),
   adupi.validation.fasilitator.editFasilitatorValidation,
   validate,
   adupi.fasilitator.editFasilitator
 );
 router.delete(
-  "/api/v1/fasilitator/delete",
+  "/api/v1/fasilitator/delete/:fasilitatorCode",
   verifyToken(["DFASILITATOR"]),
-  adupi.validation.fasilitator.oneFasilitatorValidation,
-  validate,
   adupi.fasilitator.deleteFasilitator
 );
 

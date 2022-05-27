@@ -4,14 +4,13 @@ import { model } from "../../../../models/index.js";
 import { Sequelize } from "sequelize";
 const op = Sequelize.Op;
 export const editUserValidation = [
-  check("userCode", "User code is required").notEmpty().trim().escape(),
   check("isActive", "Status is required").notEmpty().trim().escape(),
   check("email", "Email is required").notEmpty().trim().escape(),
   check("email", "Email not valid").isEmail().trim().escape().normalizeEmail(),
   check("email").custom(async (value, { req }) => {
     const user = await model.managementUser.user.findOne({
       where: {
-        userCode: req.body.userCode,
+        userCode: req.params.userCode,
         deleteAt: null,
       },
     });

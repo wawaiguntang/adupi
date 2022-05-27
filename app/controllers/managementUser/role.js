@@ -5,6 +5,7 @@ export const getAllRole = async (req, res, next) => {
     const role = await model.managementUser.role.findAll({
       where: {
         deleteAt: null,
+        status: "Public"
       },
     });
     return res.status(200).json({
@@ -24,10 +25,17 @@ export const getOneRole = async (req, res, next) => {
   try {
     const role = await model.managementUser.role.findOne({
       where: {
-        roleCode: req.body.roleCode,
+        roleCode: req.params.roleCode,
         deleteAt: null,
+        status: "Public"
       },
     });
+    if (!role) {
+      return res.status(404).json({
+        status: 404,
+        message: "Role not found",
+      });
+    }
     return res.status(200).json({
       status: 200,
       message: "Role found",
@@ -45,6 +53,7 @@ export const addRole = async (req, res, next) => {
   await model.managementUser.role
     .create({
       role: req.body.role,
+      status: "Public"
     })
     .then(function (role) {
       if (role) {
@@ -65,10 +74,16 @@ export const editRole = async (req, res, next) => {
   try {
     const role = await model.managementUser.role.findOne({
       where: {
-        roleCode: req.body.roleCode,
+        roleCode: req.params.roleCode,
         deleteAt: null,
       },
     });
+    if (!role) {
+      return res.status(404).json({
+        status: 404,
+        message: "Role not found",
+      });
+    }
     await model.managementUser.role
       .update(
         {
@@ -77,8 +92,9 @@ export const editRole = async (req, res, next) => {
         },
         {
           where: {
-            roleCode: req.body.roleCode,
+            roleCode: req.params.roleCode,
             deleteAt: null,
+            status: "Public"
           },
         }
       )
@@ -107,10 +123,17 @@ export const deleteRole = async (req, res, next) => {
   try {
     const role = await model.managementUser.role.findOne({
       where: {
-        roleCode: req.body.roleCode,
+        roleCode: req.params.roleCode,
         deleteAt: null,
+        status: "Public"
       },
     });
+    if (!role) {
+      return res.status(404).json({
+        status: 404,
+        message: "Role not found",
+      });
+    }
     await model.managementUser.role
       .update(
         {
@@ -118,8 +141,9 @@ export const deleteRole = async (req, res, next) => {
         },
         {
           where: {
-            roleCode: req.body.roleCode,
+            roleCode: req.params.roleCode,
             deleteAt: null,
+            status: "Public"
           },
         }
       )
@@ -150,14 +174,27 @@ export const addPermission = async (req, res, next) => {
       where: {
         roleCode: req.body.roleCode,
         deleteAt: null,
+        status: "Public"
       },
     });
+    if (!role) {
+      return res.status(404).json({
+        status: 404,
+        message: "Role not found",
+      });
+    }
     const permission = await model.managementUser.permission.findOne({
       where: {
         permissionCode: req.body.permissionCode,
         deleteAt: null,
       },
     });
+    if (!permission) {
+      return res.status(404).json({
+        status: 404,
+        message: "Permission not found",
+      });
+    }
     await model.managementUser.rolePermission
       .create({
         roleCode: req.body.roleCode,
@@ -188,10 +225,16 @@ export const deletePermission = async (req, res, next) => {
   try {
     const rolePermission = await model.managementUser.rolePermission.findOne({
       where: {
-        rpCode: req.body.rpCode,
+        rpCode: req.params.rpCode,
         deleteAt: null,
       },
     });
+    if (!rolePermission) {
+      return res.status(404).json({
+        status: 404,
+        message: "Permission role not found",
+      });
+    }
     await model.managementUser.rolePermission
       .update(
         {
@@ -199,7 +242,7 @@ export const deletePermission = async (req, res, next) => {
         },
         {
           where: {
-            rpCode: req.body.rpCode,
+            rpCode: req.params.rpCode,
             deleteAt: null,
           },
         }
@@ -230,7 +273,7 @@ export const listPermission = async (req, res, next) => {
     const permission = await model.managementUser.rolePermission.findAll({
       attributes: ["rpCode"],
       where: {
-        roleCode: req.body.roleCode,
+        roleCode: req.params.roleCode,
         deleteAt: null,
       },
       include: [

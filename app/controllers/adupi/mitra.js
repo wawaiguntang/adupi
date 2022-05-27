@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 
 export const registerMitra = async (req, res, next) => {
   let transaction;
-  // try {
+  try {
     transaction = await db.transaction();
     const passwordHash = await bcrypt.hash(req.body.password, 10);
     const user = await model.managementUser.user.create(
@@ -39,18 +39,18 @@ export const registerMitra = async (req, res, next) => {
       status: 200,
       message: "Berhasil melakukan registrasi",
     });
-  // } catch (err) {
-  //   if (transaction) {
-  //     await transaction.rollback();
-  //     return res.status(400).json({
-  //       status: 400,
-  //       message: "Gagal melakukan registrasi",
-  //     });
-  //   } else {
-  //     return res.status(400).json({
-  //       status: 400,
-  //       message: "Gagal melakukan registrasi",
-  //     });
-  //   }
-  // }
+  } catch (err) {
+    if (transaction) {
+      await transaction.rollback();
+      return res.status(400).json({
+        status: 400,
+        message: "Gagal melakukan registrasi",
+      });
+    } else {
+      return res.status(400).json({
+        status: 400,
+        message: "Gagal melakukan registrasi",
+      });
+    }
+  }
 };

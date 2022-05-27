@@ -59,6 +59,7 @@ export const verifyToken = (permission = []) => {
           });
 
         if (count > 0) {
+          req.userCode = userCode;
           next();
         } else {
           const { count, rows } =
@@ -84,6 +85,7 @@ export const verifyToken = (permission = []) => {
               message: "You don't have a access",
             });
           }
+          req.userCode = userCode;
           next();
         }
       }

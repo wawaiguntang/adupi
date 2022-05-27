@@ -5,10 +5,6 @@ import { QueryTypes, Sequelize } from "sequelize";
 const op = Sequelize.Op;
 
 export const editFasilitatorValidation = [
-  check("fasilitatorCode", "Kode fasilitator tidak boleh kosong")
-    .notEmpty()
-    .trim()
-    .escape(),
   check("nama", "Nama tidak boleh kosong").notEmpty().trim().escape(),
   check("wilayahCode", "Wilayah tidak boleh kosong").notEmpty().trim().escape(),
   check("wilayahCode").custom(async (value) => {
@@ -28,7 +24,7 @@ export const editFasilitatorValidation = [
   check("userCode").custom(async (value, { req }) => {
     const fasilitator = await model.adupi.fasilitator.findOne({
       where: {
-        fasilitatorCode: req.body.fasilitatorCode,
+        fasilitatorCode: req.params.fasilitatorCode,
         deleteAt: null,
       },
     });

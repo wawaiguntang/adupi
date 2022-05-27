@@ -6,7 +6,7 @@ export const getAllKabupaten = async (req, res, next) => {
     const kabupaten = await db.query(
       "SELECT * FROM wilayah WHERE LEFT(wilayahCode,2)=? AND CHAR_LENGTH(wilayahCode)=5 ORDER BY wilayah",
       {
-        replacements: [req.body.wilayahCode],
+        replacements: [req.params.wilayahCode],
         type: QueryTypes.SELECT,
       }
     );
